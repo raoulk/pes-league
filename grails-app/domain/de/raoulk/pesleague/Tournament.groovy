@@ -1,4 +1,4 @@
-package de.raoulk.pesleague.domain
+package de.raoulk.pesleague
 
 class Tournament {
 	Date dateCreated

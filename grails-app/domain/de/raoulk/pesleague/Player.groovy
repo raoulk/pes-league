@@ -1,19 +1,23 @@
-package de.raoulk.pesleague.domain
+package de.raoulk.pesleague
 
 import java.util.Date;
 
 class Player {
 	Date dateCreated
 	String name
-	
-	static hasMany = [homeMatches:Match, tournaments:Tournament, awayMatches:Match]
+
+	static hasMany = [homeMatches:Match, awayMatches:Match]
 	static mappedBy = [homeMatches: "homePlayer", awayMatches: "awayPlayer"]
-	
-    static constraints = {
+
+	String toString(){
+		return name;
+	}
+
+	static constraints = {
 		id generator: 'identity'
 		name nullable:false
-    }
-	
+	}
+
 	def beforeInsert() {
 		dateCreated = new Date()
 	}
