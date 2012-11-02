@@ -2,6 +2,9 @@ package de.raoulk.pesleague
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import de.raoulk.pesleague.beans.Table
+import de.raoulk.pesleague.beans.Team
+
 class TournamentController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -41,8 +44,10 @@ class TournamentController {
             redirect(action: "list")
             return
         }
-
-        [tournamentInstance: tournamentInstance]
+		
+		Table table = createTable(tournamentInstance);
+		
+        [tournamentInstance: tournamentInstance, table:table]
     }
 
     def edit(Long id) {
@@ -115,5 +120,32 @@ class TournamentController {
 			}
 		}
 		return matches
+	}
+	
+	private Table createTable(Tournament tournament){
+		Table table = new Table()
+		Map<String, Team> teamMap = [:]
+		tournament.players.each{Player player ->
+			teamMap[player.name] = new Team(name: player.name)
+		}
+		
+		tournament.matches.each{Match match ->
+			if(match.finished){
+				def	home = match.homePlayer.name
+				def away = match.awayPlayer.name
+				def	goalsHome = match.scoreHome
+				def	goalsAway = match.scoreAway
+				
+				teamMap.get(home).addScore(goalsHome, goalsAway)
+				teamMap.get(away).addScore(goalsAway, goalsHome)
+			}
+		}
+		List teams = teamMap.values().toList()
+		
+		teams.sort{teamA, teamB ->
+			teamA.points = teamB.points ? 0 : teamA.points > teamB.points ? 1 : -1
+		}
+		table.teams = teams
+		return table
 	}
 }

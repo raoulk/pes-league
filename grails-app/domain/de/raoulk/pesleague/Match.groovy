@@ -19,6 +19,22 @@ class Match {
 		return homePlayer?.name + "-" + awayPlayer?.name + "  " + scoreHome + ":" + scoreAway
 	}
 
+	int pointsHomePlayer(){
+		return calculatePoints(scoreHome, scoreAway)
+	}
+
+	int pointsAwayPlayer() {
+		return calculatePoints(scoreAway, scoreHome)
+		
+	}
+	
+	int calculatePoints(int a, int b){
+		if (a > b) return 3
+		if (b < a) return 0
+		return 1
+
+	} 
+	
 	static constraints = {
 		id generator: 'identity'
 		homePlayer(nullable:false)

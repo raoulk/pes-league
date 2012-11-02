@@ -1,5 +1,6 @@
 
 <%@ page import="de.raoulk.pesleague.Tournament" %>
+<%@ page import="de.raoulk.pesleague.beans.*" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -46,7 +47,7 @@
 					<span id="matches-label" class="property-label"><g:message code="tournament.matches.label" default="Matches" /></span>
 					
 						<g:each in="${tournamentInstance.matches}" var="m">
-						<span class="property-value" aria-labelledby="matches-label"><g:link controller="match" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="matches-label"><g:link controller="match" action="edit" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>
@@ -71,6 +72,32 @@
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>
 			</g:form>
+		</div>
+		
+		<div id="table">
+			<h1><g:message default="Tabelle" /></h1>
+			<table>
+				<thead>
+					<tr>
+					<th>Team</th><th>Spiele</th><th>Sieg</th><th>Unent.</th><th>Niederlage</th><th>Punkte</th>
+					</tr>
+				</thead>
+				<tbody>
+				<g:each in="${table.teams}" status="i" var="team">
+					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+					
+						<td>${team.name}</td>
+						<td>${team.numberOfGames}</td>
+						<td>${team.won}</td>
+						<td>${team.drawn}</td>
+						<td>${team.lost}</td>
+						<td>${team.points}</td>
+					
+					</tr>
+				</g:each>
+				</tbody>
+			</table>
+		
 		</div>
 	</body>
 </html>
