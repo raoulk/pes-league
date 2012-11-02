@@ -21,6 +21,10 @@ class TournamentController {
 
     def save() {
         def tournamentInstance = new Tournament(params)
+		List players = tournamentInstance.players
+		List matches = createMatches(players)
+		tournamentInstance.matches = matches
+		
         if (!tournamentInstance.save(flush: true)) {
             render(view: "create", model: [tournamentInstance: tournamentInstance])
             return
@@ -99,4 +103,17 @@ class TournamentController {
             redirect(action: "show", id: id)
         }
     }
+	
+	private List createMatches(List players){
+		List matches = []
+		for(awayPlayer in players){
+			for(homePlayer in players){
+				if (awayPlayer != homePlayer) {
+					Match match = new Match(homePlayer: homePlayer, awayPlayer: awayPlayer)
+					matches.add(match)
+				}
+			}
+		}
+		return matches
+	}
 }

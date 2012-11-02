@@ -7,7 +7,7 @@
 		<g:message code="match.homePlayer.label" default="Home Player" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="homePlayer" name="homePlayer.id" from="${de.raoulk.pesleague.Player.list()}" optionKey="id" required="" value="${matchInstance?.homePlayer?.name}" optionValue="name" class="many-to-one"/>
+	<g:select id="homePlayer" name="homePlayer.id" from="${de.raoulk.pesleague.Player.list()}" optionKey="id" required="" value="${matchInstance?.homePlayer?.id}" optionValue="name" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: matchInstance, field: 'awayPlayer', 'error')} required">
@@ -15,7 +15,7 @@
 		<g:message code="match.awayPlayer.label" default="Away Player" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="awayPlayer" name="awayPlayer.id" from="${de.raoulk.pesleague.Player.list()}" optionKey="id" required="" value="${matchInstance?.awayPlayer?.name}" optionValue="name" class="many-to-one"/>
+	<g:select id="awayPlayer" name="awayPlayer.id" from="${de.raoulk.pesleague.Player.list()}" optionKey="id" required="" value="${matchInstance?.awayPlayer?.id}" optionValue="name" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: matchInstance, field: 'scoreHome', 'error')} required">

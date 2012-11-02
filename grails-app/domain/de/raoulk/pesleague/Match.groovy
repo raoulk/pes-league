@@ -9,11 +9,15 @@ class Match {
 
 	Player awayPlayer
 
-	int scoreHome
+	int scoreHome = 0
 
-	int scoreAway
+	int scoreAway = 0
 
 	boolean finished = false
+	
+	String toString() {
+		return homePlayer?.name + "-" + awayPlayer?.name + "  " + scoreHome + ":" + scoreAway
+	}
 
 	static constraints = {
 		id generator: 'identity'
