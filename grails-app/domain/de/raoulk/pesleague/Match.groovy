@@ -16,7 +16,7 @@ class Match {
 	boolean finished = false
 	
 	String toString() {
-		return homePlayer?.name + "-" + awayPlayer?.name + "  " + scoreHome + ":" + scoreAway
+		return homePlayer?.name + " - " + awayPlayer?.name + "  " + scoreHome + ":" + scoreAway
 	}
 
 	int pointsHomePlayer(){

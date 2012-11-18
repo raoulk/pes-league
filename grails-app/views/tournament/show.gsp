@@ -42,17 +42,26 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${tournamentInstance?.matches}">
+				<g:if test="${matchesFinished}">
 				<li class="fieldcontain">
-					<span id="matches-label" class="property-label"><g:message code="tournament.matches.label" default="Matches" /></span>
+					<span id="matches-label" class="property-label"><g:message code="tournament.matches.label" default="Matches played" /></span>
 					
-						<g:each in="${tournamentInstance.matches}" var="m">
+						<g:each in="${matchesFinished}" var="m" >
 						<span class="property-value" aria-labelledby="matches-label"><g:link controller="match" action="edit" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>
 				</g:if>
-			
+				<g:if test="${matchesNotFinished}">
+				<li class="fieldcontain">
+					<span id="matches-label" class="property-label"><g:message code="tournament.matches.label" default="Matches to play" /></span>
+					
+						<g:each in="${matchesNotFinished}" var="m" >
+						<span class="property-value" aria-labelledby="matches-label"><g:link controller="match" action="edit" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>			
 				<g:if test="${tournamentInstance?.players}">
 				<li class="fieldcontain">
 					<span id="players-label" class="property-label"><g:message code="tournament.players.label" default="Players" /></span>
@@ -79,7 +88,7 @@
 			<table>
 				<thead>
 					<tr>
-					<th>Team</th><th>Spiele</th><th>Sieg</th><th>Unent.</th><th>Niederlage</th><th>Punkte</th>
+					<th>Team</th><th>Spiele</th><th>Sieg</th><th>Unent.</th><th>Niederl.</th><th>Tore</th><th>GGTore</th><th>Pkt.</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -91,6 +100,8 @@
 						<td>${team.won}</td>
 						<td>${team.drawn}</td>
 						<td>${team.lost}</td>
+						<td>${team.goalsShot}</td>
+						<td>${team.goalsConceded}</td>
 						<td>${team.points}</td>
 					
 					</tr>

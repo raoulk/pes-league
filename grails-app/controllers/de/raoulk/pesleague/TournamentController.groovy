@@ -24,10 +24,7 @@ class TournamentController {
 
     def save() {
         def tournamentInstance = new Tournament(params)
-		List players = tournamentInstance.players
-		List matches = createMatches(players)
-		tournamentInstance.matches = matches
-		
+		tournamentInstance.createMatches()
         if (!tournamentInstance.save(flush: true)) {
             render(view: "create", model: [tournamentInstance: tournamentInstance])
             return
@@ -46,8 +43,13 @@ class TournamentController {
         }
 		
 		Table table = createTable(tournamentInstance);
+
+		List matchesFinished = []
+		tournamentInstance.matches.each{it -> if( it.finished) matchesFinished.add(it)}		
+		List matchesNotFinished = []
+		tournamentInstance.matches.each{it -> if(! it.finished) matchesNotFinished.add(it)}		
 		
-        [tournamentInstance: tournamentInstance, table:table]
+        [tournamentInstance: tournamentInstance, table:table, matchesFinished:matchesFinished ,matchesNotFinished:matchesNotFinished]
     }
 
     def edit(Long id) {
@@ -109,18 +111,7 @@ class TournamentController {
         }
     }
 	
-	private List createMatches(List players){
-		List matches = []
-		for(awayPlayer in players){
-			for(homePlayer in players){
-				if (awayPlayer != homePlayer) {
-					Match match = new Match(homePlayer: homePlayer, awayPlayer: awayPlayer)
-					matches.add(match)
-				}
-			}
-		}
-		return matches
-	}
+
 	
 	private Table createTable(Tournament tournament){
 		Table table = new Table()
@@ -143,7 +134,7 @@ class TournamentController {
 		List teams = teamMap.values().toList()
 		
 		teams.sort{teamA, teamB ->
-			teamA.points = teamB.points ? 0 : teamA.points > teamB.points ? 1 : -1
+			teamA.points == teamB.points ? 0 : teamA.points > teamB.points ? -1 : 1
 		}
 		table.teams = teams
 		return table

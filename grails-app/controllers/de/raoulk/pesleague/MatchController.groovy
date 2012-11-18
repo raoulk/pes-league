@@ -27,7 +27,7 @@ class MatchController {
         }
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'match.label', default: 'Match'), matchInstance.id])
-        redirect(action: "show", id: matchInstance.id)
+		redirect(action: "show", id: matchInstance.id)
     }
 
     def show(Long id) {
@@ -71,14 +71,21 @@ class MatchController {
         }
 
         matchInstance.properties = params
+		matchInstance.finished = true
 
         if (!matchInstance.save(flush: true)) {
             render(view: "edit", model: [matchInstance: matchInstance])
             return
         }
-
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'match.label', default: 'Match'), matchInstance.id])
-        redirect(action: "show", id: matchInstance.id)
+		
+		Tournament tournament = Tournament.find("from Tournament as t where ? in elements(t.matches)", matchInstance)
+		
+		if (tournament) {
+			redirect(controller: 'tournament', action: 'show', id: tournament.id)
+		}else {
+	        flash.message = message(code: 'default.updated.message', args: [message(code: 'match.label', default: 'Match'), matchInstance.id])
+	        redirect(action: "show", id: matchInstance.id)
+		}
     }
 
     def delete(Long id) {

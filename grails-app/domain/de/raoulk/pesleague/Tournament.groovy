@@ -1,5 +1,7 @@
 package de.raoulk.pesleague
 
+import java.util.List;
+
 class Tournament {
 	Date dateCreated
 	
@@ -13,5 +15,23 @@ class Tournament {
 
 	def beforeInsert() {
 		dateCreated = new Date()
+	}
+	
+	void createMatches(){
+		if (! matches) {
+			matches = []
+		}
+		if (matches?.size() > 0) {
+			return
+		}
+		
+		for(awayPlayer in players){
+			for(homePlayer in players){
+				if (awayPlayer != homePlayer) {
+					Match match = new Match(homePlayer: homePlayer, awayPlayer: awayPlayer)
+					matches.add(match)
+				}
+			}
+		}
 	}
 }
