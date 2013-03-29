@@ -133,8 +133,7 @@ class TournamentController {
 		}
 		List teams = teamMap.values().toList()
 		
-		teams.sort{teamA, teamB ->
-			teamA.points == teamB.points ? 0 : teamA.points > teamB.points ? -1 : 1
+		teams.sort{teamA, teamB -> teamA.compareTo(teamB)
 		}
 		table.teams = teams
 		return table

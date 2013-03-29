@@ -33,12 +33,3 @@
 	</label>
 	<g:field name="scoreAway" type="number" min="0" value="${matchInstance.scoreAway}" required=""/>
 </div>
-
-<div class="fieldcontain ${hasErrors(bean: matchInstance, field: 'finished', 'error')} ">
-	<label for="finished">
-		<g:message code="match.finished.label" default="Finished" />
-		
-	</label>
-	<g:checkBox name="finished" value="${matchInstance?.finished}" />
-</div>
-

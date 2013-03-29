@@ -1,6 +1,6 @@
 package de.raoulk.pesleague.beans
 
-class Team {
+class Team implements Comparable<Team> {
 	String name
 	int numberOfGames = 0
 	int won = 0
@@ -30,5 +30,30 @@ class Team {
 			drawn ++
 			points +=1
 		}
+	}
+
+	@Override
+	public int compareTo(Team other) {
+		if (points > other.points) {
+			return -1
+		}
+		else if (points < other.points) {
+			return 1
+		}
+		// punktgleich
+		else if (goalDiff() > other.goalDiff()) {
+			return -1
+		}
+		else if (goalDiff() < other.goalDiff()) {
+			return 1
+		}
+		else if (goalsShot > other.goalsShot) {
+			return -1
+		}
+		else if (goalsShot < other.goalsShot) {
+			return 1
+		}
+
+		return 0;
 	}
 }

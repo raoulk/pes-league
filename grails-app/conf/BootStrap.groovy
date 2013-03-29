@@ -7,14 +7,17 @@ class BootStrap {
 		Player raoul = new Player(name: 'Steyn')
 		Player olt = new Player(name: 'Olt')
 		Player peez = new Player(name: 'Peez')
+		Player jo = new Player(name: 'Jo')
 		raoul.save()
 		olt.save()
 		peez.save()
+		jo.save()
 		
 		Tournament tournament = new Tournament()
-		tournament.addToPlayers(olt)
 		tournament.addToPlayers(raoul)
+		tournament.addToPlayers(jo)
 		tournament.addToPlayers(peez)
+		tournament.addToPlayers(olt)
 		
 		tournament.createMatches()
 		tournament.save()

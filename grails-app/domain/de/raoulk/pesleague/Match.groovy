@@ -16,7 +16,9 @@ class Match {
 	boolean finished = false
 	
 	String toString() {
-		return homePlayer?.name + " - " + awayPlayer?.name + "  " + scoreHome + ":" + scoreAway
+		def score = finished ? " $scoreHome:$scoreAway" : ""
+		
+		return homePlayer?.name + " - " + awayPlayer?.name +  score
 	}
 
 	int pointsHomePlayer(){

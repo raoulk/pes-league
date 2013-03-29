@@ -11,7 +11,7 @@ class MatchController {
     }
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 20, 100)
         [matchInstanceList: Match.list(params), matchInstanceTotal: Match.count()]
     }
 
@@ -21,6 +21,7 @@ class MatchController {
 
     def save() {
         def matchInstance = new Match(params)
+		matchInstance.finished = true
         if (!matchInstance.save(flush: true)) {
             render(view: "create", model: [matchInstance: matchInstance])
             return
